@@ -31,8 +31,7 @@ npm run build --report
 
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
-  [2]: https://github.com/Nice-Ming
+  [2]: https://nice-ming.github.io/Questionnaire-management/dist/index.html#/
   [3]: http://ife.baidu.com/2016/task/detail?taskId=50

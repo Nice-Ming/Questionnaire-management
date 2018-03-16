@@ -1,0 +1,316 @@
+/*
+* @Author: NiceMing
+* @Date:   2018-03-07 19:47:50
+*/
+@import './public.scss';
+
+.container {
+	width: 100rem;
+	margin: 6rem auto;
+	color: #555;
+}
+
+.qu-wrap {
+	box-sizing: border-box;
+	padding: 2rem;
+	@include wrap-background;
+}
+
+.qu-wrap > header {
+	position: relative;
+	height: 5rem;
+	margin: 0  2rem 2rem 2rem;
+	line-height: 5rem;
+	text-align: center;
+
+	span {
+		position: absolute;
+		top: 0;
+		left: 0;
+		cursor: pointer;
+	}
+
+	span:hover {
+		color: $orange;
+	}
+
+	p, input {
+		width: 50rem;
+		margin: 0 auto;
+		font-size: 1.8rem;
+		font-weight: 700;
+	}
+
+	p:hover {
+		background-color: $light-orange;
+	}
+
+	input {
+		display: none;
+		height: 100%;
+		text-align: center;
+		border: none;
+		outline: none;
+		background-color: #ccc;
+
+		&.inlineShow {
+			display: inline-block;
+		}
+
+	}
+
+}
+
+.qu-content {
+	padding: 2rem;
+
+	border: {
+		top: 2px solid #bbb;
+		bottom: 2px solid #bbb;
+	}
+
+	.qu-item {
+		position: relative;
+		margin: 1rem 0;
+		padding: 1rem 2rem;
+
+		&:hover {
+			background-color: $light-orange;
+
+			.operat-list {
+				display: flex;
+			}
+
+			div:last-of-type {
+				display: none;
+			}
+
+			#require-check {
+				display: block;
+			}
+
+		}
+
+		h3 {
+			height: 2rem;
+			font-size: 1.4rem;
+			font-weight: 600;
+			line-height: 2rem;
+
+			& > input {
+				display: none;
+				width: 15rem;
+				height: 2rem;
+				font-size: 1.4rem;
+				border: none;
+				outline: none;
+				background-color: #ccc;
+			}
+
+		}
+
+		div:last-of-type {
+			height: 2rem;
+		}
+
+		.qu-num {
+			display: inline-block;
+			width: 2.5rem;
+			margin-right: 1rem;
+		}
+
+		&.nowEditing {
+			.qu-topic {
+				display: none;
+			}
+
+			h3 > input {
+				display: inline-block;
+			}
+
+		}
+
+		&.optEditing .optionEditing {
+			.optionText {
+				display: none;
+			}
+
+			& > input {
+				display: inline-block;
+			}
+
+		}
+
+	}
+
+	.options-list > li {
+		height: 2rem;
+		margin: 1rem 0 0 4rem;
+		line-height: 2rem;
+
+		&:hover {
+			ul {
+				display: inline-flex;
+				margin-left: 2rem;
+			}
+
+			li {
+				margin-left: 1rem;
+				font-size: 1.2rem;
+				cursor: pointer;
+			}
+
+			li:hover {
+				color: $orange;
+			}
+
+		}
+
+		& > ul {
+			display: none;
+		}
+
+		& > input {
+			display: none;
+			width: 15rem;
+			height: 2rem;
+			font-size: 1.4rem;
+			border: none;
+			outline: none;
+			background-color: #ccc;
+		}
+
+	}
+
+	textarea {
+		margin: 1rem 0 0 4rem;
+		resize: none;
+	}
+
+	.operat-list {
+		display: none;
+		height: 2rem;
+		justify-content: flex-end;
+
+		li {
+			margin-right: 1rem;
+			cursor: pointer;
+
+			&:hover {
+				color: $orange;
+			}
+
+		}
+
+	}
+
+}
+
+.add-box {
+	border: 1px solid #ccc;
+
+	.qu-type, .add-btn {
+		@include flex-center;
+	}
+
+	.qu-type {
+		overflow: hidden;
+		height: 0;
+		transition: height .5s;
+
+		&.expand {
+			height: 7rem;
+		}
+
+		span {
+			margin: 0 1rem;
+			padding: .5rem 1.5rem;
+			cursor: pointer;
+			border: 1px solid #ccc;
+			background-color: #eee;
+
+			&:hover {
+				background-color: #ccc;
+			}
+
+		}
+
+	}
+
+	.add-btn {
+		padding: 2rem 0;
+		font-size: 2rem;
+		cursor: pointer;
+		background-color: #eee;
+
+		&:hover {
+			background-color: #ccc;
+		}
+
+	}
+
+}
+
+.qu-wrap > footer {
+	display: flex;
+	padding: 2rem 8rem;
+	justify-content: space-between;
+
+	.date-part {
+		position: relative;
+
+		input {
+			display: inline-block;
+			box-sizing: border-box;
+			width: 24rem;
+			margin-left: 1.5rem;
+			padding: 1rem 2rem;
+			font-size: 1.2rem;
+			cursor: pointer;
+			border: 1px solid #ccc;
+			outline: none;
+		}
+
+	}
+
+	.ctrl-part {
+		@include nomal-btn();
+
+		span {
+			margin: 0 1rem;
+
+			&:nth-of-type(2) {
+				color: #fff;
+				border-color: $deep-orange;
+				background-color: $orange;
+			}
+
+			&:nth-of-type(1) {
+				color: $font-color;
+				background-color: #fff;
+
+				&:hover {
+					border-color: #ccc;
+					box-shadow: 0 0 8px #ccc;
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+#date-picker {
+	position: absolute;
+	right: 0;
+	margin-top: .5rem;
+}
+
+#require-check {
+	position: absolute;
+	top: 1rem;
+	right: 2rem;
+	display: none;
+}

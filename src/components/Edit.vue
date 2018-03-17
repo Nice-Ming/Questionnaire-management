@@ -276,7 +276,9 @@ export default {
 				this.errorPrompt(`每份问卷至多10个问题！`);
 				return;
 			}
-			this.questions.splice(index, 0, this.questions[index])
+			let oldQuestion = this.questions[index];
+			let newQuestion = JSON.parse(JSON.stringify(oldQuestion));
+			this.questions.splice(index, 0, newQuestion);
 		},
 
 		delQuestion(index) {

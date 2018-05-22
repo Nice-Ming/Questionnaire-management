@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 @import "style/reset";
 
 #app {

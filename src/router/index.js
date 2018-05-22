@@ -4,7 +4,6 @@ import List from '@/components/List'
 import Fill from '@/components/Fill'
 import Data from '@/components/Data'
 import Edit from '@/components/Edit'
-
 import Datepicker from '@/components/Datepicker'
 
 Vue.use(Router)

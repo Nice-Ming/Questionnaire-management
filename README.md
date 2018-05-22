@@ -33,5 +33,5 @@ npm run build --report
 
 
 
-  [2]: https://nice-ming.github.io/Questionnaire-management/dist/index.html#/
+  [2]: https://nice-ming.github.io/Questionnaire-management/#/
   [3]: http://ife.baidu.com/2016/task/detail?taskId=50

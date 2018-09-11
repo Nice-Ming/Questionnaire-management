@@ -1,0 +1,155 @@
+/*
+* @Author: NiceMing
+* @Date:   2018-03-06 19:29:50
+*/
+$white: #fff;
+$orange: #f07600;
+$deep-orange: #c26206;
+$light-orange: #fcf0e5;
+$light-green: #60e451;
+$font-color: #555;
+
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin wrap-background {
+	border-radius: 5px;
+	background-color: $white;
+	box-shadow: 0 0 5px #ccc;
+}
+
+@mixin add-btn {
+	cursor: pointer;
+	color: $white;
+	border: 1px solid $deep-orange;
+	border-radius: 5px;
+	background-color: $orange;
+
+	&:hover {
+		box-shadow: 0 0 8px $orange;
+	}
+
+}
+
+@mixin nomal-btn {
+	span {
+		display: inline-block;
+		width: 7.5rem;
+		height: 2.5rem;
+		font-size: 1.2rem;
+		line-height: 2.5rem;
+		cursor: pointer;
+		text-align: center;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		background-color: $white;
+
+		&:hover {
+			color: $white;
+			border-color: $deep-orange;
+			background-color: $orange;
+			box-shadow: 0 0 8px $orange;
+		}
+
+	}
+
+}
+
+@mixin check-icon {
+	i {
+		display: inline-block;
+		box-sizing: border-box;
+		width: 1.2rem;
+		height: 1.2rem;
+		border: 1px solid #999;
+		border-radius: 50%;
+		background-color: #eee;
+
+		&.checked {
+			border: .4rem solid $orange;
+		}
+
+	}
+
+}
+
+.show {
+	display: block;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, .2);
+
+	.prompt-box {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 32rem;
+		height: 18rem;
+		transform: translate(-50%, -50%);
+		@include wrap-background();
+
+		header {
+			display: flex;
+			height: 4rem;
+			padding: 0 2rem;
+			font-weight: 700;
+			line-height: 4rem;
+			background-color: #f2f2f2;
+			justify-content: space-between;
+
+			a {
+				color: #555;
+
+				&:hover {
+					color: $orange;
+				}
+
+			}
+
+		}
+
+		p {
+			padding: 3rem 2rem 4rem 2rem;
+		}
+
+		footer {
+			text-align: center;
+			@include nomal-btn;
+
+			span {
+				width: 7rem;
+				margin: .5rem;
+
+				&:nth-of-type(1) {
+					color: #fff;
+					border-color: $deep-orange;
+					background-color: $orange;
+				}
+
+				&:nth-of-type(2) {
+					color: $font-color;
+					background-color: #fff;
+
+					&:hover {
+						border-color: #ccc;
+						box-shadow: 0 0 8px #ccc;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}

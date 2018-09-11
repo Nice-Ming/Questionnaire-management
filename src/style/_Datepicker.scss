@@ -1,0 +1,106 @@
+/*
+* @Author: NiceMing
+* @Date:   2018-03-01 15:37:42
+*/
+@import './public';
+
+.date-container {
+	width: 24rem;
+	height: 24rem;
+	font-size: 1.2rem;
+
+	&:before {
+		display: block;
+		width: 0;
+		height: 0;
+		margin: 0 auto;
+		content: '';
+
+		border: {
+			right: .5rem solid transparent;
+			bottom: .5rem solid $orange;
+			left: .5rem solid transparent;
+		}
+
+	}
+
+}
+
+header {
+	color: $white;
+	background-color: $orange;
+}
+
+.date-title {
+	display: flex;
+	height: 3rem;
+	margin: 0 1.5rem;
+	font-size: 1.4rem;
+	font-weight: 700;
+	justify-content: space-between;
+	align-items: center;
+
+	.left-arrow, .right-arrow {
+		display: block;
+		width: 0;
+		height: 0;
+		cursor: pointer;
+		border-top: .5rem solid transparent;
+		border-bottom: .5rem solid transparent;
+	}
+
+	.left-arrow {
+		border-right: .5rem solid $white;
+	}
+
+	.right-arrow {
+		border-left: .5rem solid $white;
+	}
+
+}
+
+.week-title, .date-content {
+	ul {
+		display: flex;
+	}
+
+	li {
+		text-align: center;
+		flex: 1;
+	}
+
+}
+
+.date-content {
+	border: {
+		right: 1px solid #ccc;
+		bottom: 1px solid #ccc;
+		left: 1px solid #ccc;
+	}
+
+	ul {
+		height: 3.2rem;
+		line-height: 3.2rem;
+		color: #ddd;
+		border-bottom: 1px solid #eee;
+		background-color: $white;
+	}
+
+	li {
+		&:not(:last-child) {
+			border-right: 1px solid #eee;
+		}
+
+		&.selectable {
+			cursor: pointer;
+			color: #666;
+
+			&:hover {
+				background-color: $light-orange;
+			}
+
+		}
+
+	}
+
+}

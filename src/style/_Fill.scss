@@ -1,0 +1,23 @@
+/*
+* @Author: NiceMing
+* @Date:   2018-03-10 13:46:51
+*/
+@import './public.scss';
+@import './_Edit.scss';
+
+.qu-wrap > header {
+	p:hover {
+		background-color: #fff;
+	}
+}
+
+#submitBtn, #backBtn {
+	width: 8rem;
+	height: 3rem;
+	margin: 0 auto;
+	line-height: 3rem;
+	cursor: pointer;
+	text-align: center;
+	color: #fff;
+	@include add-btn;
+}

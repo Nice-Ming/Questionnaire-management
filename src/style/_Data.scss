@@ -1,0 +1,76 @@
+/*
+* @Author: NiceMing
+* @Date:   2018-03-11 15:26:02
+*/
+@import './public.scss';
+@import './_Fill.scss';
+
+.qu-content {
+	.qu-item {
+		display: flex;
+		border: 2px solid #ccc;
+
+		&:hover {
+			background-color: #fff;
+		}
+
+		.qu-data, .ans-data {
+			display: flex;
+			flex-direction: column;
+
+			& > * {
+				height: 2rem;
+			}
+
+			.echart {
+				height: 20rem;
+			}
+
+		}
+
+		.qu-data {
+			flex: 3;
+
+			p {
+				margin: 1rem 0 0 3rem;
+			}
+
+		}
+
+		.ans-data {
+			flex: 2;
+
+			.outerBar {
+				position: relative;
+				width: 20rem;
+				height: 1.2rem;
+				margin: 1.6rem 0 0 0;
+				font-size: 1.2rem;
+				border: 1px solid #ccc;
+			}
+
+			.innerBar {
+				display: block;
+				width: 60%;
+				height: 100%;
+				background-color: $orange;
+			}
+
+			.scaleNum {
+				position: absolute;
+				top: 0;
+				right: -4rem;
+			}
+
+		}
+
+	}
+
+}
+
+#data-tip {
+	height: 1rem;
+	margin: -2.2rem auto 0 auto;
+	font-size: 1.2rem;
+	font-weight: 400;
+}

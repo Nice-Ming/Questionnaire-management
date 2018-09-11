@@ -1,0 +1,115 @@
+/*
+* @Author: NiceMing
+* @Date:   2018-03-02 10:09:03
+*/
+@import './public';
+
+.container {
+	width: 100rem;
+	margin: 6rem auto;
+	color: #555;
+}
+
+.add-wrapper {
+	height: 20rem;
+	@include flex-center;
+	@include wrap-background;
+
+	p {
+		padding: 1rem 3rem;
+		@include add-btn;
+	}
+
+}
+
+.list-wrapper {
+	overflow: hidden;
+	@include wrap-background;
+	@include check-icon;
+
+	ul {
+		display: flex;
+		height: 6rem;
+		line-height: 6rem;
+		@include nomal-btn;
+
+		&:nth-of-type(1) {
+			background-color: #f2f2f2;
+
+			p {
+				display: inline-block;
+				width: 10rem;
+				height: 3rem;
+				margin-left: 11rem;
+				line-height: 3rem;
+				text-align: center;
+				@include add-btn;
+			}
+
+		}
+
+		&:not(:first-child) {
+			border-bottom: 1px solid #eee;
+
+			&:hover {
+				background-color: $light-orange;
+			}
+
+		}
+
+		li {
+			&:nth-of-type(1) {
+				text-align: center;
+				flex: 1;
+			}
+
+			&:nth-of-type(2) {
+				flex: 5;
+			}
+
+			&:nth-of-type(3) {
+				flex: 3;
+			}
+
+			&:nth-of-type(4) {
+				flex: 2;
+			}
+
+			&:nth-of-type(5) {
+				flex: 4;
+			}
+
+		}
+
+		.releasing {
+			color: $light-green;
+		}
+
+	}
+
+	div {
+		display: flex;
+		height: 7rem;
+		line-height: 6rem;
+		@include nomal-btn();
+
+		p {
+			&:nth-of-type(1) {
+				text-align: center;
+				flex: 1;
+			}
+
+			&:nth-of-type(2) {
+				flex: 14;
+
+				span {
+					margin-left: 2rem;
+				}
+
+			}
+
+		}
+
+	}
+
+}

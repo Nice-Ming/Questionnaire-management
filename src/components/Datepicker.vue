@@ -2,9 +2,9 @@
 	<div class="date-container">
 		<header>
 			<p class="date-title">
-				<span class="left-arrow" @click="getDates(-1)"></span>
+				<span class="left-arrow" @click="initDates(-1)"></span>
 				<span v-text="`${year}年 ${month}月`"></span>
-				<span class="right-arrow" @click="getDates(1)"></span>
+				<span class="right-arrow" @click="initDates(1)"></span>
 			</p>
 			<p class="week-title">
 				<ul>
@@ -30,10 +30,11 @@
 </template>
 
 <script>
-	import data from'../data.js';
+	import getDates  from'../public/js/date';
 
 	export default {
 		name: 'Datepicker',
+
 		data() {
 			return {
 				dates: [],
@@ -42,14 +43,14 @@
 			}
 		},
 
-		mounted() {
-			this.dates = data.date();
+		created() {
+			this.dates = getDates();
 			this.year = this.dates.year;
 			this.month = this.dates.month;
 		},
 
 		methods: {
-			getDates(n) {
+			initDates(n) {
 				let year = this.year;
 				let month = this.month - 1 + n;
 
@@ -62,7 +63,7 @@
 					month = 0;
 				}
 
-				this.dates = data.date(year, month);
+				this.dates = getDates(year, month);
 				this.year = this.dates.year;
 				this.month = this.dates.month;
 			},

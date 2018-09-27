@@ -1,39 +1,69 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import List from '@/components/List'
-import Fill from '@/components/Fill'
-import Data from '@/components/Data'
-import Edit from '@/components/Edit'
-import Datepicker from '@/components/Datepicker'
+import storage, { TOKEN_KEY }from '../public/js/storage.js'
+
+// 异步加载
+const Register = () => import('@/components/Register')
+const List = () => import('@/components/List')
+const Data = () => import('@/components/Data')
+const Edit = () => import('@/components/Edit')
+const Fill = () => import('@/components/Fill')
+const Login = () => import('@/components/Login')
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'List',
-      component: List
-    },
-    {
-      path: '/fill/:id',
-      name: 'Fill',
-      component: Fill
-    },
-    {
-      path: '/data/:id',
-      name: 'Data',
-      component: Data
-    },
-    {
-      path: '/edit/:id',
-      name: 'Edit',
-      component: Edit
-    },
-    {
-      path: '/datepicker',
-      name: 'Datepicker',
-      component: Datepicker
+const routes = [
+  {
+    path: '/',
+    redirect: '/list'
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/register',
+    component: Register
+  },
+  {
+    path: '/list',
+    component: List,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/fill',
+    alias: '/view',
+    component: Fill
+  },
+  {
+    path: '/data',
+    name: 'data',
+    component: Data,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit',
+    alias: ['/add', '/re-edit'],
+    name: 'edit',
+    component: Edit,
+    meta: { requiresAuth: true }
+  }
+]
+
+const router = new Router({ routes })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!storage.get(TOKEN_KEY)) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
     }
-  ]
+  } else {
+    next()
+  }
 })
+
+export default router

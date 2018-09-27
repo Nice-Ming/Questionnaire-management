@@ -1,4 +1,4 @@
-/*
+	/*
 * @Author: NiceMing
 * @Date:   2018-03-07 19:47:50
 */
@@ -32,6 +32,12 @@
 
 	span:hover {
 		color: $orange;
+	}
+
+	p {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	p, input {
@@ -92,12 +98,12 @@
 		}
 
 		h3 {
-			height: 2rem;
+			// height: 2rem;
 			font-size: 1.4rem;
 			font-weight: 600;
 			line-height: 2rem;
 
-			& > input {
+			input {
 				display: none;
 				width: 15rem;
 				height: 2rem;
@@ -166,11 +172,16 @@
 
 		}
 
+		& > span {
+			display: inline-block;
+			min-width: 10rem;
+		}
+
 		& > ul {
 			display: none;
 		}
 
-		& > input {
+		& > input[type="text"] {
 			display: none;
 			width: 15rem;
 			height: 2rem;
@@ -206,10 +217,11 @@
 
 }
 
-.add-box {
+.add-box, .upload-box, .download-box {
 	border: 1px solid #ccc;
+	margin: 1rem 0;
 
-	.qu-type, .add-btn {
+	.qu-type, .add-btn, .upload-btn, .download-btn {
 		@include flex-center;
 	}
 
@@ -237,7 +249,7 @@
 
 	}
 
-	.add-btn {
+	.add-btn, .upload-btn, .download-btn {
 		padding: 2rem 0;
 		font-size: 2rem;
 		cursor: pointer;
@@ -253,17 +265,19 @@
 
 .qu-wrap > footer {
 	display: flex;
-	padding: 2rem 8rem;
 	justify-content: space-between;
+	padding: 2rem 5rem;
 
 	.date-part {
+		display: flex;
+		justify-content: space-between;
 		position: relative;
+		width: 62rem;
 
 		input {
 			display: inline-block;
 			box-sizing: border-box;
 			width: 24rem;
-			margin-left: 1.5rem;
 			padding: 1rem 2rem;
 			font-size: 1.2rem;
 			cursor: pointer;
@@ -274,11 +288,13 @@
 	}
 
 	.ctrl-part {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 17rem;
 		@include nomal-btn();
 
 		span {
-			margin: 0 1rem;
-
 			&:nth-of-type(2) {
 				color: #fff;
 				border-color: $deep-orange;
@@ -300,17 +316,27 @@
 
 	}
 
+	.upload-part {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+		span {
+			@include add-btn;
+			padding: .5rem 1rem;
+		}
+	}
 }
 
 #date-picker {
 	position: absolute;
-	right: 0;
-	margin-top: .5rem;
-}
+	top: 4rem; 
 
-#require-check {
-	position: absolute;
-	top: 1rem;
-	right: 2rem;
-	display: none;
+	&.start {
+		right: 32rem;
+	}
+
+	&.end {
+		right: 0;
+	}
 }

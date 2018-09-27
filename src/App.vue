@@ -23,7 +23,13 @@ export default {
   min-width: 110rem;
   height: 100%;
   font-family: arial;
-  background-color: #efefef;
+  background-color: #f9f9f9;
   overflow: auto;
+}
+
+@media screen and (max-width: 640px) {
+	#app {
+		min-width: 100%;
+  }
 }
 </style>

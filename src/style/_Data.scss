@@ -3,7 +3,7 @@
 * @Date:   2018-03-11 15:26:02
 */
 @import './public.scss';
-@import './_Fill.scss';
+@import './_Edit.scss';
 
 .qu-content {
 	.qu-item {
@@ -32,7 +32,7 @@
 			flex: 3;
 
 			p {
-				margin: 1rem 0 0 3rem;
+				margin: 1rem 0 0 4rem;
 			}
 
 		}
@@ -51,9 +51,10 @@
 
 			.innerBar {
 				display: block;
-				width: 60%;
+				width: 0;
 				height: 100%;
 				background-color: $orange;
+				transition: width .5s;
 			}
 
 			.scaleNum {
@@ -68,9 +69,13 @@
 
 }
 
-#data-tip {
-	height: 1rem;
-	margin: -2.2rem auto 0 auto;
-	font-size: 1.2rem;
-	font-weight: 400;
+#backBtn {
+  width: 8rem;
+  height: 3rem;
+  margin: 0 auto;
+  line-height: 3rem;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  @include add-btn;
 }

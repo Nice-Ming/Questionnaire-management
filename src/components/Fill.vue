@@ -1,32 +1,38 @@
 <template>
 	<div class="container">
+		<loader v-show="isLoading"/>
 		<div class="qu-wrap">
 			<header>
-				<span @click="iterator = backBtn(); iterator.next()">&lt; 返回</span>
-				<p>{{ quData.title }}</p>
+				{{ paperObj.title }}
 			</header>
 			<div class="qu-content">
-				<section class="qu-item" v-for="(item, index) in questions">
-					<h3>{{ `Q${index + 1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.topic}` }}
-						<span v-if="item.isMandatory"> *</span>
+				<section class="qu-item" v-for="(item, index) in questionList">
+					<h3>
+						<span class="qu-num">{{`Q${index + 1}`}}</span>
+						<span class="qu-topic">{{ item.questionTitle }}</span>
+						<span class="qu-type">{{ item.questionType | transformQursiotnType}}</span>
 					</h3>
 					<textarea rows="8"
-						      cols="80"
-					          v-if="item.type === 'textarea'"
-					          v-model="item.answer"
-					          :required="item.isMandatory">
+						      	cols="80"
+					          v-if="item.questionType === 3"
+										v-model="answerList[index].answerContent[0]"
+					>
 					</textarea>
 					<ul v-else class="options-list">
-						<li v-for="(option, optIndex) in item.options">
-							<label >
-								<input v-if="item.type === 'radio'"
-									   :type="item.type"
-									   :name="index + 1"
-									   @change="item.answer = optIndex">
-								<input v-else
-									   :type="item.type"
-									   :name="index + 1"
-									   @change="checkboxAnswer($event, optIndex, item.answer)">
+						<li  v-for="(option, optIndex) in item.questionOption">
+							<label>
+								<input v-if="item.questionType === 1"
+											type="radio"
+											:value="option"
+									    :name="index + 1"
+											v-model="answerList[index].answerContent[0]"
+								>
+								<input v-else-if="item.questionType === 2"
+											type="checkbox"
+											:value="option"
+									    :name="index + 1"
+											v-model="answerList[index].answerContent"
+								>
 								<span>{{ option }}</span>
 							</label>
 						</li>
@@ -34,7 +40,8 @@
 				</section>
 			</div>
 			<footer>
-				<span id="submitBtn" @click="iterator = submitBtn(); iterator.next()">提交问卷</span>
+				<span class="btn" v-if="isFillMode" @click="iterator = submit(); iterator.next()">提交问卷</span>
+				<span class="btn" v-else @click="back()">返回</span>
 			</footer>
 		</div>
 		<div class="overlay" v-show="isShowPrompt">
@@ -54,129 +61,142 @@
 </template>
 
 <script>
-import Store from '../store.js';
+import Loader from "./Loader";
+import { getPaper, viewPaper, commitPaper } from '../api'
 
 export default {
 	name: 'Fill',
-	data() {
-		return {
-			quData: {},
-			questions: [],
-			answers: {},
-			promptText: '',
-			isShowPrompt: false,
+
+	components: {
+		'loader': Loader
+	},
+
+	filters: {
+		transformQursiotnType(type) {
+			return	type === 1 ? '(单选题)' : (type === 2 ? '(多选题)' : '(文本题)')
 		}
 	},
 
-	beforeRouterEnter(to, from, next) {
-		let id = to.params.id;
-		let item = {};
-		if (id !== 0) {
-			let length = Store.fetch().length;
-			if (id < 0 || id > length) {
-				alert('非法路由');
-				next('');
-			}
-			else {
-				item = Store.fetch()[id - 1];
-			}
-
-			if (item.state === 0) {
-				next();
-			}
-			else {
-				alert('非法路由');
-				next('/');
-			}
-		}
-		else {
-			next();
+	data() {
+		return {
+			paperObj: {},
+			questionList: [],
+			answerList: [],
+			promptText: '',
+			isShowPrompt: false,
+			isFillMode: false,
+			isLoading: false,
 		}
 	},
 
 	created() {
-		this.getData();
+		// 设置该页面模式 /fill（答题） /view（查看）
+		this.isFillMode = this.$route.path === '/fill'
+		this._getPaper();
 	},
 
 	methods: {
-		getData() {
-			let id = this.$route.params.id;
-
-			this.quData = Store.fetch()[id - 1];
-			this.questions = this.quData.questions;
-			this.questions.forEach((item) => {
-				if (item.type === 'checkbox') {
-					item.answer = [];
-				}
-				else {
-					item.answer = '';
-				}
-			});
-		},
-
 		showPrompt(text) {
 			this.promptText = text;
 			this.isShowPrompt = true;
 		},
 
-		checkboxAnswer(event, index, answer) {
-			if (event.target.checked) {
-				answer.push(index);
-			}
-			else {
-				answer.splice(answer.indexOf(index), 1);
-			}
-		},
-
-		requireValidate() {
-			let textareas = document.querySelectorAll('textarea');
-			return [].every.call(textareas, item => {
-				if (item.hasAttribute('required') && item.value.trim() === '') {
-					return false;
+		validateAnswer() {
+			let noAnswerList = this.answerList.filter(item => {
+				if (item.questionType !== 3 && !item.answerContent.length) {
+					return item
 				}
-				return true;
+			})
+
+			return !!noAnswerList.length
+		},
+
+		initAnswerList() {
+			this.questionList.map((item, index) => {
+				this.$set(this.answerList, index, {
+					id: item.id,
+					questionType: item.questionType,
+					answerContent: []
+				})
 			})
 		},
 
-		getAnswer() {
-			this.questions.forEach((item, index) => {
-				this.answers[`Q${index + 1}answer`] = item.answer;
-			})
+		back() {
+			this.$router.push('/')
 		},
 
-		sendAnswer() {
-			this.getAnswer();
-			this.$router.push({path: '/'});
-			console.log('非正式项目，无需发送用户回答数据，打印出来看看就好');
-			console.log(this.answers);
+		*commitSuccess() {
+			yield this.showPrompt('提交成功')
+			yield (() => {
+				window.location.href = 'about:blank'
+  			window.close()
+			})()
 		},
 
-		*submitBtn() {
-			let text = ``;
-			if (this.quData.state === 0) {
-				text = `问卷尚未发布，无法提交！`;
+		*submit() {
+			let text = '';
+			if (this.validateAnswer()) {
+				text = '有选择题未填写，无法提交！'
 				this.iterator = null;
-			}
-			else if (!this.requireValidate()) {
-				text = `有必填项未填写，无法提交！`;
-				this.iterator = null;
-			}
-			else {
+			} else {
 				text = `确认提交问卷吗？`
 			}
 
 			yield this.showPrompt(text);
-			yield this.sendAnswer();
+			yield this._commitPaper();
 		},
 
-		*backBtn() {
-			yield this.showPrompt(`放弃答题回到主页吗？`);
-			yield this.$router.push({path: '/'});
+		_getPaper() {
+			let data = {id: this.$route.query.id}
+			this.isLoading = true
+
+			if (this.isFillMode) {
+				viewPaper(data).then(res => {
+					if (res.code === 0) {
+						let status = res.data.status
+						if (status === 1) {
+							this.paperObj = res.data
+							this.questionList = res.data.questions
+							this.initAnswerList()
+							this.isLoading = false
+						} else {
+							window.alert(res.msg)
+							setTimeout(() => {
+								window.location.href = 'about:blank'
+  							window.close()
+							}, 5000);
+						}
+					}
+				})
+			} else {
+				getPaper(data).then(res => {
+					if (res.code === 0) {
+						this.paperObj = res.data
+						this.questionList = res.data.questions
+						this.isLoading = false
+						this.initAnswerList()
+					}
+				})
+			}
 		},
-	},
+
+		_commitPaper() {
+			let data = {
+				id: this.paperObj.id,
+				answers: this.answerList
+			}
+			commitPaper(data).then(res => {
+				if (res.code === 0) {
+					this.iterator = this.commitSuccess()
+					this.iterator.next()
+				}
+			})
+		}
+	}
 }
 </script>
 
 <style scoped lang="scss">
+@import '../style/public.scss';
 @import '../style/_Fill.scss';
 </style>

@@ -4,6 +4,7 @@
     <router-link tag="h3" to="/">我的问卷</router-link>
   </header>
 </template>
+<<<<<<< HEAD
 
 <script>
 export default {
@@ -13,4 +14,14 @@ export default {
       },
     },
 }
+=======
+<script>
+export default {
+  data() {
+    return {
+      aray: []
+    };
+  }
+};
+>>>>>>> dev-20200115
 </script>
